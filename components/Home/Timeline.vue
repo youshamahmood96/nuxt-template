@@ -2,7 +2,8 @@
     <div class="timeline">
         <div v-for="murmur in murmurs" :key="murmur.id" class="murmur">
             <div class="murmur-header">
-                <a :href="`/profile/${murmur.username}`" class="username-link">{{ murmur.username }}</a>
+                <!--  use userID instead of murmur.id -->
+                <NuxtLink :to="`/user/${murmur.userId}`" class="username-link">{{ murmur.username }}</NuxtLink>
                 <span class="murmur-date">{{ murmur.date }}</span>
             </div>
             <div class="murmur-content">
@@ -28,6 +29,7 @@ export default {
                 const response = await this.$axios.$get('https://jsonplaceholder.typicode.com/posts');
                 this.murmurs = response.map(item => ({
                     id: item.id,
+                    userId: item.userId,
                     username: 'User' + item.userId,  // For simplicity, appending 'User' to user ID
                     date: new Date().toISOString().slice(0, 10), // Using today's date for simplicity
                     content: item.title // Assuming the title as the content for this example
